@@ -1,2 +1,2 @@
 # SoA_Analysis
-Study the Sense of Agency using EEG and behavioral data
+Studying the Sense of Agency using EEG and behavioral data
