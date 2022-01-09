@@ -78,7 +78,7 @@ end
 bins = 0: size(currentElecDelta,1)-1;  % no. of conditions under comparison
 useYlim = 0;       % use y-limit; 0 = no, 1 = yes
 YLims = [-15 5];   % common y-limit - not used in this script
-saveFig = 0;
+saveFig = 1;
 
 pvalStack1 = [];
 statsResults = [];
@@ -309,7 +309,7 @@ if saveFig == 1
     close
 end
 
-
+%  ***********    %%%%%%%%%%%    ***********    %%%%%%%%%%%    ***********
 
 %% Line plot with with stats.  (Corrected)
 
@@ -387,72 +387,7 @@ if saveFig == 1
     close
 end
 
-
-%% Line plot with with stats.
-
-% Prepare colors
-% customColor = lines(6);
-
-figure
-timePlot = corrTimeVect;
-
-for freqIdx = 1:6
-    
-    switch freqIdx
-        case 1
-            elecPower = squeeze(groupElecDelta(elecIdx,:,:));
-            titleString = 'Delta (1-4 Hz)';
-        case 2
-            elecPower = squeeze(groupElecTheta(elecIdx,:,:));
-            titleString = 'Theta (4-8 Hz)';
-        case 3
-            elecPower = squeeze(groupElecAlpha(elecIdx,:,:));
-            titleString = 'Alpha (8-13 Hz)';
-        case 4
-            elecPower = squeeze(groupElecBeta1(elecIdx,:,:));
-            titleString = 'Beta1 (13-20 Hz)';
-        case 5
-            elecPower = squeeze(groupElecBeta2(elecIdx,:,:));
-            titleString = 'Beta2 (20-35 Hz)';
-        case 6
-            elecPower = squeeze(groupElecGamma(elecIdx,:,:));
-            titleString = 'Gamma (35-50 Hz)';
-    end
-    
-    % Calculate the grand-mean power.
-    meanPower = mean(elecPower,2);
-    
-    % Calculate Delta power.
-    meanPower = meanPower-meanPower(1);   %  why ?? : compared to 0 delay
-    
-    stdPower  = std(elecPower);
-    plot(timePlot, meanPower, 'color', customColor(freqIdx, :), 'marker', '.', 'markersize', 20);
-  
-    if freqIdx == 1
-        hold on
-        xlabel('Delay Interval (ms)')
-        ylabel('Detla Power (10*log10 uV^2/Hz)')
-    end
-end
-
-legend({'Delta' 'Theta' 'Alpha' 'Beta1' 'Beta2' 'Gamma'}, 'location', 'northwest')
-title('Global EEG power against time delay') %title('Global EEG power against interval length')
-hold off
-axis square
-xlim([-10 220])
-% ylim([-0.1 2.4])
-set(gcf, 'numbertitle', 'off', 'position', [1 1 800 800])
-set(findall(gcf, '-property', 'fontsize'), 'fontsize', 14)
-
-if saveFig == 1
-    addpath(spaceplotsPath)
-%     spaceplots   % to remove whitespace.
-    rmpath(spaceplotsPath)
-    print( append(OutputPath,'grandMeanPowers') , figFormat, figResolution)
-    close
-end
-
-
+%  ***********    %%%%%%%%%%%    ***********    %%%%%%%%%%%    ***********
 
 function nameval = lineprops(idx)
 %   LINEPROPS(idx) will return a 1x6 cell array of name-value pairs that
